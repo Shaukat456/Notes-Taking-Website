@@ -8,7 +8,12 @@
     <title>Notes App</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
+<style>
+    .s1{
+        display: none;
+    }
+</style>
+    </head>
 
 <body>
 
@@ -89,6 +94,29 @@
             </div>
         </div>
     </div>
+    <input type="button" value="PRANK BUTTON" class="pb">
+    <input type="button" value="I am sorry" class="s1">
+    <script>
+        var pb = document.querySelector('.pb');
+        var pbu = document.querySelector('.s1');
+        pb.addEventListener('click', () => {
+            document.body.style.transition = 'all .9s ease-in'
+            document.body.style.margin = '100px 100px'
+            document.body.style.backgroundColor = 'aqua'
+            document.body.innerHTML = 'YOU JUST PRESSED THE PRANK BUTTON NOW YOU ARE PRANKED'
+            document.body.style.padding = '300px 240px'
+            setInterval(() => {
+                document.body.style.fontFamily='cursive'
+                document.body.style.transform='scale(2)'
+            }, 2000);
+            pbu.style.display='inline'
+            
+
+
+        })
+
+
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
