@@ -12,13 +12,24 @@
     .s1{
         display: none;
     }
+    #addtxt{
+        transition: all .6s ease-in-out;
+    }
+    #addTxt:focus{
+        transition: all .7s ease-in;
+        transform: scale(1.02) scaleZ(2);
+        background-color:black ;
+        color: aqua;
+        font-family: monospace;
+        font-size: 20px;
+    }
 </style>
     </head>
 
 <body>
 
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Magic Notes</a>
+        <a class="navbar-brand" href="#"> Notes Taking Website</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -94,26 +105,124 @@
             </div>
         </div>
     </div>
-    <input type="button" value="PRANK BUTTON" class="pb">
-    <input type="button" value="I am sorry" class="s1">
+    
     <script>
-        var pb = document.querySelector('.pb');
-        var pbu = document.querySelector('.s1');
-        pb.addEventListener('click', () => {
-            document.body.style.transition = 'all .9s ease-in'
-            document.body.style.margin = '100px 100px'
-            document.body.style.backgroundColor = 'aqua'
-            document.body.innerHTML = 'YOU JUST PRESSED THE PRANK BUTTON NOW YOU ARE PRANKED'
-            document.body.style.padding = '300px 240px'
-            setInterval(() => {
-                document.body.style.fontFamily='cursive'
-                document.body.style.transform='scale(2)'
-            }, 2000);
-            pbu.style.display='inline'
+        // let textarea=document.getElementById('addTxt');
+        // let addbtn=document.getElementById('addBtn');
+        // let cardtext=document.getElementById('card-text')
+        // let cardadd=''
+        // addbtn.addEventListener('click',()=>{
+
+        // })
+ 
+        console.log("Welcome to notes app. This is app.js");
+showNotes();
+
+// If user adds a note, add it to the localStorage
+let addBtn = document.getElementById("addBtn");
+addBtn.addEventListener("click", function(e) {
+  let addTxt = document.getElementById("addTxt");
+  let notes = localStorage.getItem("notes");
+  if (notes == null) {
+    notesObj = [];
+  } else {
+    notesObj = JSON.parse(notes);
+  }
+  notesObj.push(addTxt.value);
+  localStorage.setItem("notes", JSON.stringify(notesObj));
+  addTxt.value = "";
+//   console.log(notesObj);
+  showNotes();
+});
+
+// Function to show elements from localStorage
+function showNotes() {
+  let notes = localStorage.getItem("notes");
+  if (notes == null) {
+    notesObj = [];
+  } else {
+    notesObj = JSON.parse(notes);
+  }
+  let html = "";
+  notesObj.forEach(function(element, index) {
+    html += `
+            <div class="noteCard my-2 mx-2 card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">Note ${index + 1}</h5>
+                        <p class="card-text"> ${element}</p>
+                        <button id="${index}"onclick="deleteNote(this.id)" class="btn btn-primary">Delete Note</button>
+                    </div>
+                </div>`;
+  });
+  let notesElm = document.getElementById("notes");
+  if (notesObj.length != 0) {
+    notesElm.innerHTML = html;
+  } else {
+    notesElm.innerHTML = `Use "Add a Note" section above to add notes.`;
+  }
+}
+
+// Function to delete a note
+function deleteNote(index) {
+//   console.log("I am deleting", index);
+
+  let notes = localStorage.getItem("notes");
+  if (notes == null) {
+    notesObj = [];
+  } else {
+    notesObj = JSON.parse(notes);
+  }
+
+  notesObj.splice(index, 1);
+  localStorage.setItem("notes", JSON.stringify(notesObj));
+  showNotes();
+}
+
+
+let search = document.getElementById('searchTxt');
+search.addEventListener("input", function(){
+
+    let inputVal = search.value.toLowerCase();
+    // console.log('Input event fired!', inputVal);
+    let noteCards = document.getElementsByClassName('noteCard');
+    Array.from(noteCards).forEach(function(element){
+        let cardTxt = element.getElementsByTagName("p")[0].innerText;
+        if(cardTxt.includes(inputVal)){
+            element.style.display = "block";
+        }
+        else{
+            element.style.display = "none";
+        }
+        // console.log(cardTxt);
+    })
+})
+
+/*
+Further Features:
+1. Add Title
+2. Mark a note as Important
+3. Separate notes by user
+4. Sync and host to web server 
+*/ 
+
+
+        // var pb = document.querySelector('.pb');
+        // var pbu = document.querySelector('.s1');
+        // pb.addEventListener('click', () => {
+        //     document.body.style.transition = 'all .9s ease-in'
+        //     document.body.style.margin = '100px 100px'
+        //     document.body.style.backgroundColor = 'aqua'
+        //     document.body.innerHTML = 'YOU JUST PRESSED THE PRANK BUTTON NOW YOU ARE PRANKED'
+        //     document.body.style.padding = '300px 240px'
+        //     setInterval(() => {
+        //         document.body.style.fontFamily='cursive'
+        //         document.body.style.transform='scale(2)'
+        //     }, 2000);
+        //     pbu.style.display='inline'
             
 
 
-        })
+        // })
 
 
     </script>
@@ -127,7 +236,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-    <script src="js/app.js"></script>
+    <!-- <script src="js/app.js"></script> -->
 </body>
 
 </html>
